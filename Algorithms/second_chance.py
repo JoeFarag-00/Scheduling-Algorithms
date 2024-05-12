@@ -41,7 +41,10 @@ class second_chance:
       return page_faults,frames
   
 
+hey=second_chance()
 
+report=hey.second(3,[0,4,1,4,2,4,3,4,2,4,0,4,1,4,2,4,3,4])
+print(report)    
 
 
     
