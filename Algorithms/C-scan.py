@@ -12,7 +12,8 @@ class CScan:
 
 
     def schedule(self):
-        self.request_queue.append(self.disk_size)  
+        # self.request_queue.append(0)
+        # self.request_queue.append(self.disk_size)  
         self.request_queue.sort()  
 
        
@@ -21,6 +22,8 @@ class CScan:
 
 
         if self.initial_Forward_move==True:
+            # self.request_queue.remove(0)
+            self.request_queue.append(self.disk_size)  
             for i in range(current_index, len(self.request_queue)):
                 print(f"Servicing request at index number: {i} ---->", self.request_queue[i])
                 self.awnser.append(self.request_queue[i])
@@ -35,12 +38,14 @@ class CScan:
         if self.initial_Forward_move==False:
             
             
-           
-            for i in range(current_index, -1, -1):
+            self.request_queue.append(0)
+            self.request_queue.sort()  
+            print("self.request_queue ",self.request_queue)
+            for i in range(current_index+1, -1, -1):
                 print(f"Servicing request at index number: {i} ---->", self.request_queue[i])
                 self.awnser.append(self.request_queue[i])
             
-            for i in range(len(self.request_queue) - 1, current_index, -1):
+            for i in range(len(self.request_queue) - 1, current_index+1, -1):
                 print(f"Servicing request at index number: {i} ---->", self.request_queue[i])
                 self.awnser.append(self.request_queue[i])
                 
@@ -56,7 +61,7 @@ class CScan:
 
 
 
-c_scan = CScan(4999, initial_position=143, initial_Forward_move=True)
+c_scan = CScan(4999, initial_position=143, initial_Forward_move=False)
 
 
 c_scan.add_request([ 86, 1470, 913, 1774, 948, 1509, 1022, 1750, 130])
@@ -77,5 +82,4 @@ for i in range(1,len(final_awnser)):
 
 print("the seek_distance ",seek_distance)
 print("total Seek distance ",total_seek_distance)
-
 
