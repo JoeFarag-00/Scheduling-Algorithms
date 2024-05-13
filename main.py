@@ -20,7 +20,6 @@ app.title("Scheduling Algorithms")
 class MainGUI:
     def __init__(self):
         self.app = app
-        # Drawer = turtle.RawTurtle(self.canvas)
 
     def DestroyAll(self):
         widgets = app.winfo_children()
@@ -46,11 +45,21 @@ class MainGUI:
                 print(optimal_return, OFault)
                 self.Make_Table(optimal_return)
                 
+                self.Result_Label = customtkinter.CTkLabel(master=self.Main_Frame,text="",font=("System", 30, "bold"))
+                self.Result_Label.grid(row=7,column=0,pady=10, padx=10)
+                self.Result_Label.configure(text=f"Page Faults: {OFault}", fg_color="red")
+
+                
             elif choice == "Second Chance":
                 run_second = second_chance()
                 second_return, SFaults = run_second.second(Frame,Input_List)
                 print(second_return, SFaults)
                 self.Make_Table(second_return)
+                
+                self.Result_Label = customtkinter.CTkLabel(master=self.Main_Frame,text="",font=("System", 30, "bold"))
+                self.Result_Label.grid(row=7,column=0,pady=10, padx=10)
+                self.Result_Label.configure(text=f"Page Faults: {SFaults}", fg_color="red")
+
             
             elif choice == "C-Scan":
                 if self.Path_Choice.get() and self.Initial_Position.get() and self.End_line.get():
@@ -69,6 +78,8 @@ class MainGUI:
                     
                     self.Draw_Disk(cscan_return, EndTrack)
                     
+                    self.Result_Label = customtkinter.CTkLabel(master=self.Main_Frame,text="",font=("System", 30, "bold"))
+                    self.Result_Label.grid(row=7,column=0,pady=10, padx=10)
                     self.Result_Label.configure(text=f"Seek Time: {SeekTime}", fg_color="red")
 
                 else:
@@ -91,6 +102,8 @@ class MainGUI:
                     
                     self.Draw_Disk(look_return, EndTrack)
                     
+                    self.Result_Label = customtkinter.CTkLabel(master=self.Main_Frame,text="",font=("System", 30, "bold"))
+                    self.Result_Label.grid(row=7,column=0,pady=10, padx=10)
                     self.Result_Label.configure(text=f"Seek Time: {SeekTime}", fg_color="red")
                 else:
                     print("Check Input")
@@ -145,6 +158,7 @@ class MainGUI:
         global choice
         choice = c
         if choice == "Optimal" or choice == "Second Chance":
+            app.geometry("1000x800")
             self.Algo_Label.configure(text="Page Replacement")
             try:
                 if self.table:
@@ -158,6 +172,7 @@ class MainGUI:
                 self.End_line.destroy()
                 self.canvas.destroy()
                 self.Input_Frame.destroy()
+                self.Result_Label.destroy()
             except:
                 pass
             
@@ -186,6 +201,8 @@ class MainGUI:
                 self.End_line.destroy()
                 self.canvas.destroy()
                 self.Input_Frame.destroy()
+                self.Result_Label.destroy()
+
             except:
                 pass
             
@@ -193,7 +210,7 @@ class MainGUI:
             self.Path_Choice.grid(row=3,column=0,pady=10, padx=10)
             
             self.Input_Frame = customtkinter.CTkFrame(master=self.Main_Frame)
-            self.Input_Frame.grid(row=4,column=0,pady=10, padx=40)
+            self.Input_Frame.grid(row=4,column=0,pady=10, padx=10)
             
             self.Initial_Position = customtkinter.CTkEntry(master=self.Input_Frame, placeholder_text="Initial Position", width=100)
             self.Initial_Position.grid(row=0,column=0,pady=10, padx=10)
@@ -203,7 +220,6 @@ class MainGUI:
             
             self.canvas = customtkinter.CTkCanvas(self.Solution_Frame, width=809, height=400)
             self.canvas.grid(row=0, column=0,padx=20,pady=10)    
-            
             
 
     def Main_Screen(self):
@@ -222,12 +238,12 @@ class MainGUI:
 
         self.Load_Btn = customtkinter.CTkButton(master=self.Main_Frame, command=self.Run_Algo, text="Run")
         self.Load_Btn.grid(row=5,column=0,pady=10, padx=10)
-        
-        self.Result_Label = customtkinter.CTkLabel(master=self.Main_Frame,text="",font=("System", 30, "bold"))
-        self.Result_Label.grid(row=5,column=1,pady=10, padx=10)
 
         self.Solution_Frame = customtkinter.CTkFrame(master=self.Main_Frame)
         self.Solution_Frame.grid(row=6,column=0,pady=10, padx=10)
+        
+        self.Result_Label = customtkinter.CTkLabel(master=self.Main_Frame,text="",font=("System", 30, "bold"))
+        self.Result_Label.grid(row=7,column=0,pady=10, padx=10)
         
 
 gui = MainGUI()
